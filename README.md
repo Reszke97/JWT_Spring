@@ -4,7 +4,7 @@ A secure backend authentication system built with **Spring Boot** and **JWT (JSO
 
 ## 🛠️ Tech Stack
 
-- **Java 17**
+- **Java 21**
 - **Spring Boot 3**
 - **Spring Security**
 - **JWT (JSON Web Token)**
