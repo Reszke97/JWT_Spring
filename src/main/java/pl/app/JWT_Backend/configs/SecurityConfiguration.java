@@ -31,36 +31,12 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .authorizeHttpRequests(
-                        (authz) -> authz
-                                .requestMatchers("/api/v1/auth/**")
-                                .permitAll()
-                                .requestMatchers("api/v1/user/permission-assigned-to-group**")
-                                .permitAll()
-                                .requestMatchers("api/v1/user/get-all-users-with-permission-groups")
-                                .permitAll()
-                                .requestMatchers("api/v1/user/permission")
-                                .hasAuthority("HELPDESK")
-//                                .hasAuthority("")
-                                // Allow all requests to paths matching /api/some-path-here/**
-//                                .requestMatchers("/api/v1/permission")
-//                                .hasAnyAuthority("ADMIN")
-//
-//                                 Allow all GET requests to any path
-//                                .requestMatchers(HttpMethod.GET)
-//                                .permitAll()
-//
-//                                 Allow PUT requests only if the user has the 'USER' authority
-//                                .requestMatchers(HttpMethod.PUT)
-//                                .authenticated()
-//
-//                                 Allow all POST requests to any path
-//                                .requestMatchers(HttpMethod.POST)
-//                                .permitAll()
-
-                                // Require authentication for any other requests not matched above
-                                .anyRequest()
-                        // Change to your required permission name .hasAuthority("")
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/v1/user/permission-assigned-to-group**").permitAll()
+                        .requestMatchers("/api/v1/user/get-all-users-with-permission-groups").permitAll()
+                        .requestMatchers("/api/v1/user/permission").hasAuthority("PROGRAMMER")
+                        .anyRequest().authenticated()
                 )
                 .exceptionHandling(exceptions -> exceptions.authenticationEntryPoint(authEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
